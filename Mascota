@@ -1,0 +1,105 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Mascota {
+    String especie;
+    String caracteristicas;
+    double precio;
+    int cantidadEnTienda;
+    int cantidadVendida;
+
+    public Mascota(String especie, String caracteristicas, double precio, int cantidadEnTienda) {
+        this.especie = especie;
+        this.caracteristicas = caracteristicas;
+        this.precio = precio;
+        this.cantidadEnTienda = cantidadEnTienda;
+        this.cantidadVendida = 0;
+    }
+
+    public int getCantidadRestante() {
+        return cantidadEnTienda - cantidadVendida;
+    }
+
+    public void vender(int cantidad) {
+        if (cantidad <= getCantidadRestante()) {
+            cantidadVendida += cantidad;
+            System.out.println("✅ Venta realizada: " + cantidad + " " + especie);
+        } else {
+            System.out.println("❌ No hay suficiente stock de " + especie + " para vender " + cantidad);
+        }
+    }
+
+    public void mostrarInfo() {
+        System.out.println("🐶 Especie: " + especie);
+        System.out.println("📌 Características: " + caracteristicas);
+        System.out.println("💵 Precio: $" + precio);
+        System.out.println("📦 En tienda: " + cantidadEnTienda);
+        System.out.println("🛒 Vendidas: " + cantidadVendida);
+        System.out.println("📉 Restantes: " + getCantidadRestante());
+        System.out.println("----------------------------------");
+    }
+}
+
+public class TiendaMascotas {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Mascota> inventario = new ArrayList<>();
+
+        // Añadir mascotas al inventario
+        inventario.add(new Mascota("Perro", "Raza Labrador, 6 meses", 150.0, 10));
+        inventario.add(new Mascota("Gato", "Raza Persa, 4 meses", 120.0, 8));
+        inventario.add(new Mascota("Loro", "Hablador, colores vivos", 90.0, 5));
+
+        int opcion;
+
+        do {
+            System.out.println("\n--- 🐾 Menú Tienda de Mascotas ---");
+            System.out.println("1. Ver inventario");
+            System.out.println("2. Vender mascota");
+            System.out.println("3. Salir");
+            System.out.print("Selecciona una opción: ");
+            opcion = scanner.nextInt();
+            scanner.nextLine(); // Limpiar buffer
+
+            switch (opcion) {
+                case 1:
+                    System.out.println("\n📋 Inventario actual:");
+                    for (Mascota m : inventario) {
+                        m.mostrarInfo();
+                    }
+                    break;
+
+                case 2:
+                    System.out.print("Especie a vender: ");
+                    String especie = scanner.nextLine();
+                    System.out.print("Cantidad a vender: ");
+                    int cantidad = scanner.nextInt();
+                    scanner.nextLine(); // Limpiar buffer
+
+                    boolean encontrada = false;
+                    for (Mascota m : inventario) {
+                        if (m.especie.equalsIgnoreCase(especie)) {
+                            m.vender(cantidad);
+                            encontrada = true;
+                            break;
+                        }
+                    }
+
+                    if (!encontrada) {
+                        System.out.println("❗ Especie no encontrada en el inventario.");
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("¡Gracias por usar el sistema de inventario!");
+                    break;
+
+                default:
+                    System.out.println("⚠️ Opción no válida.");
+                    break;
+            }
+        } while (opcion != 3);
+
+        scanner.close();
+    }
+}
