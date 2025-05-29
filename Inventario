@@ -1,0 +1,37 @@
+import java.util.ArrayList;
+
+public class Inventario {
+    private ArrayList<Mascota> mascotas;
+
+    public Inventario() {
+        mascotas = new ArrayList<>();
+    }
+
+    public void agregarMascota(Mascota mascota) {
+        mascotas.add(mascota);
+    }
+
+    public void mostrarInventario() {
+        for (Mascota m : mascotas) {
+            m.mostrarInfo();
+        }
+    }
+
+    public boolean venderMascota(String especie, int cantidad) {
+        for (Mascota m : mascotas) {
+            if (m.getEspecie().equalsIgnoreCase(especie)) {
+                return m.vender(cantidad);
+            }
+        }
+        return false;
+    }
+
+    public boolean existeEspecie(String especie) {
+        for (Mascota m : mascotas) {
+            if (m.getEspecie().equalsIgnoreCase(especie)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
