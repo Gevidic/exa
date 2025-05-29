@@ -1,0 +1,41 @@
+public class Mascota {
+    private String especie;
+    private String caracteristicas;
+    private double precio;
+    private int cantidadTotal;
+    private int cantidadVendida;
+
+    public Mascota(String especie, String caracteristicas, double precio, int cantidadTotal) {
+        this.especie = especie;
+        this.caracteristicas = caracteristicas;
+        this.precio = precio;
+        this.cantidadTotal = cantidadTotal;
+        this.cantidadVendida = 0;
+    }
+
+    public String getEspecie() {
+        return especie;
+    }
+
+    public int getCantidadRestante() {
+        return cantidadTotal - cantidadVendida;
+    }
+
+    public boolean vender(int cantidad) {
+        if (cantidad <= getCantidadRestante()) {
+            cantidadVendida += cantidad;
+            return true;
+        }
+        return false;
+    }
+
+    public void mostrarInfo() {
+        System.out.println("🐾 Especie: " + especie);
+        System.out.println("📌 Características: " + caracteristicas);
+        System.out.println("💵 Precio: $" + precio);
+        System.out.println("📦 En tienda: " + cantidadTotal);
+        System.out.println("🛒 Vendidas: " + cantidadVendida);
+        System.out.println("📉 Restantes: " + getCantidadRestante());
+        System.out.println("----------------------------------");
+    }
+}
